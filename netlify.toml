@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Next.js static export writes a real HTML file per route (with trailingSlash),
+# so Netlify serves clean URLs and a proper 404 natively — no SPA catch-all.

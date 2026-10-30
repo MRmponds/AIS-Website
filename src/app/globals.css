@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --shell: 78rem;
+}
+
+/* Marquee keyframes defined here (not via a purgeable utility) so the tech-logo
+   rows keep scrolling in the production build. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  background-color: theme("colors.paper");
+  color: theme("colors.ink");
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv01", "cv11";
+  overflow-x: hidden;
+}
+
+::selection {
+  background: theme("colors.flame");
+  color: #fff;
+}
+
+/* Focus visibility for keyboard users */
+:focus-visible {
+  outline: 2px solid theme("colors.flame");
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: var(--shell);
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Mono eyebrow label — encodes the "software" identity */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: theme("colors.flame-deep");
+    font-weight: 500;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 1px;
+    background: theme("colors.flame");
+  }
+  .eyebrow-dark {
+    color: theme("colors.ember");
+  }
+
+  .display {
+    font-family: var(--font-display), system-ui, sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+  }
+
+  .flame-text {
+    background: theme("backgroundImage.flame");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.22s ease, background-color 0.22s ease, color 0.22s ease;
+    will-change: transform;
+  }
+  .btn-primary {
+    background: theme("colors.ink");
+    color: #fff;
+    box-shadow: 0 10px 30px -14px rgba(11, 11, 15, 0.6);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 44px -16px rgba(255, 90, 31, 0.5);
+    background: theme("colors.flame-deep");
+  }
+  .btn-flame {
+    background: theme("backgroundImage.flame");
+    color: #fff;
+    box-shadow: 0 12px 34px -14px rgba(255, 90, 31, 0.7);
+  }
+  .btn-flame:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 50px -16px rgba(255, 90, 31, 0.85);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: theme("colors.ink");
+    border: 1px solid theme("colors.line");
+  }
+  .btn-ghost:hover {
+    transform: translateY(-2px);
+    border-color: theme("colors.ink");
+    background: #fff;
+  }
+
+  .card {
+    background: theme("colors.surface");
+    border: 1px solid theme("colors.line");
+    border-radius: 1.5rem;
+  }
+
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1.5px;
+    width: 100%;
+    background: theme("colors.flame");
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    background-image: linear-gradient(
+        to right,
+        rgba(11, 11, 15, 0.04) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(11, 11, 15, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .grid-bg-dark {
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+  }
+}
